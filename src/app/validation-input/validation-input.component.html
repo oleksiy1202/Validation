@@ -1,0 +1,16 @@
+<!-- validation-input.component.html -->
+<div class="container">
+    <app-child [userName]="userName"></app-child>
+
+    <h1>Password</h1>
+    <div class="input-field">
+        <input type="password" id="password" [(ngModel)]="password" (keyup)="checkPasswordStrength()">
+        <label for="password">Enter Password</label>
+    </div>
+
+    <app-password-strength [strength]="strength"></app-password-strength>
+
+    <div class="right-align">
+        <button (click)="onSubmit()" class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+    </div>
+</div>

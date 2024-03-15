@@ -1,0 +1,25 @@
+/* validation-input.component.css */
+.password-meter {
+    margin-bottom: 20px;
+}
+
+.password-meter div {
+    height: 10px;
+    margin-bottom: 5px;
+}
+
+.gray {
+    background-color: gray;
+}
+
+.red {
+    background-color: red;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.green {
+    background-color: green;
+}
