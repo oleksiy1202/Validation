@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PasswordStrengthComponent } from './password-strength/password-strength.component';
 import { ChildComponent } from './child/child.component';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ChildComponent } from './child/child.component';
     ValidationInputComponent,
     PasswordStrengthComponent,
     ChildComponent,
+    MessageComponent,
   ],
   imports: [BrowserModule, FormsModule, RouterModule.forRoot([])],
   providers: [],

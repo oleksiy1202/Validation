@@ -1,51 +1,39 @@
-import { Component } from '@angular/core'
-import Swal from 'sweetalert2'
+import { Component, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-validation-input',
   templateUrl: './validation-input.component.html',
-  styleUrls: ['./validation-input.component.css']
+  styleUrls: ['./validation-input.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ValidationInputComponent),
+      multi: true
+    }
+  ]
 })
-export class ValidationInputComponent {
-
+export class ValidationInputComponent implements ControlValueAccessor {
   password: string = ''
   userName: string = ''
   strength: string = 'gray'
 
+  constructor() { }
 
   checkPasswordStrength() {
-    const password = this.password;
+    const password = this.password
 
     if (password.trim().length === 0) {
-      this.strength = 'gray';
+      this.strength = 'gray'
     } else if (/^[a-zA-Z]+$/.test(password) || /^[0-9]+$/.test(password) || /^[!@#$%^&*()-_+=~<>?,.:/;{}[\]]+$/.test(password)) {
-      this.strength = 'easy';
+      this.strength = 'easy'
     } else if (/^[0-9a-zA-Z]+$/.test(password)) {
-      this.strength = 'medium';
+      this.strength = 'medium'
     } else if (/^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/`\-='"]+$/.test(password)) {
-      this.strength = 'strong';
+      this.strength = 'strong'
     }
   }
-
-
-  // message() {
-  //   Swal.fire({
-  //     title: 'Enter your name',
-  //     input: 'text',
-  //     customClass: {
-  //       validationMessage: 'my-validation-message',
-  //     },
-  //     preConfirm: (value) => {
-  //       if (!value) {
-  //         Swal.showValidationMessage('<i class="fa fa-info-circle"></i> Your name is required')
-  //       } else {
-  //         this.userName = 'hello' + ' ' + value
-  //       }
-  //     }
-  //   })
-  // }
-
-
 
   onSubmit() {
     if (this.password.length < 8) {
@@ -58,16 +46,19 @@ export class ValidationInputComponent {
         position: "top-end",
         icon: "success",
         title: 'Your password: ' + '<div style="font-weight:bold; color:red">' + this.password + '</div>',
-        html: `<button (click)="copyPassword()" class="btn waves-effect waves-light" type="button" name="copy">Copy Password</button>`,
         showConfirmButton: false,
         timer: 2500
       })
     }
   }
 
-  // copyPassword() {
-  //   const passwordInput = document.getElementById('password') as HTMLInputElement
-  //   passwordInput.select()
-  //   document.execCommand('copy')
-  // }
+  writeValue(value: any): void {
+    this.password = value;
+  }
+
+  registerOnChange(fn: any): void { }
+
+  registerOnTouched(fn: any): void { }
+
+  setDisabledState(isDisabled: boolean): void { }
 }
