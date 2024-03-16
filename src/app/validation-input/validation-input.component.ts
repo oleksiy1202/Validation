@@ -1,5 +1,6 @@
 import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { patterns } from 'src/utils/regex-patterns';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,23 +15,24 @@ import Swal from 'sweetalert2';
     }
   ]
 })
+
 export class ValidationInputComponent implements ControlValueAccessor {
   password: string = ''
   userName: string = ''
   strength: string = 'gray'
 
-  constructor() { }
+  // constructor() { }
 
   checkPasswordStrength() {
     const password = this.password
 
-    if (password.trim().length === 0) {
+    if (password.length === 0) {
       this.strength = 'gray'
-    } else if (/^[a-zA-Z]+$/.test(password) || /^[0-9]+$/.test(password) || /^[!@#$%^&*()-_+=~<>?,.:/;{}[\]]+$/.test(password)) {
+    } else if (patterns.easy.test(password)) {
       this.strength = 'easy'
-    } else if (/^[0-9a-zA-Z]+$/.test(password)) {
+    } else if (patterns.medium.test(password)) {
       this.strength = 'medium'
-    } else if (/^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/`\-='"]+$/.test(password)) {
+    } else if (patterns.strong.test(password)) {
       this.strength = 'strong'
     }
   }
@@ -60,5 +62,5 @@ export class ValidationInputComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: any): void { }
 
-  setDisabledState(isDisabled: boolean): void { }
+  // setDisabledState(isDisabled: boolean): void { }
 }
